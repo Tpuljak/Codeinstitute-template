@@ -1,1 +1,1 @@
-# Codeinstitute-template
+# Codeinstitute Template
