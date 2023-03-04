@@ -4,11 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    links:
+      - psql
  
   psql:
     image: postgres:11.9
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=pass
       - POSTGRES_USER=user

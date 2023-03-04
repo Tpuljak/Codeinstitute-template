@@ -2,9 +2,9 @@ FROM ubuntu:22.04
 
 ENV PYTHON_VERSION 3.8.11
 ENV DEBIAN_FRONTEND=noninteractive
-#Set of all dependencies needed for pyenv to work on Ubuntu
+#Install pyenv and psql dependencies
 RUN apt-get update \ 
-        && apt-get install -y --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget ca-certificates curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev mecab-ipadic-utf8 git
+        && apt-get install -y --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget ca-certificates curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev mecab-ipadic-utf8 git postgresql-client
 
 RUN curl https://cli-assets.heroku.com/install.sh | sh
 
@@ -36,5 +36,8 @@ RUN echo 'alias heroku_config=". $HOME/.theia/heroku_config.sh"' >> ~/.bashrc
 
 COPY ./build-assets/make_url.py /home/$USERNAME/.theia/make_url.py
 RUN echo 'alias make_url="python3 $HOME/.theia/make_url.py "' >> ~/.bashrc
+
+USER root
+RUN chown -R $USERNAME:$USERNAME /home/$USERNAME/.theia
 
 CMD ["tail", "-f", "/dev/null"]
