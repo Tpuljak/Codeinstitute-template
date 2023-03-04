@@ -5,13 +5,12 @@ services:
       context: .
       dockerfile: Dockerfile
     links:
-      - psql
+      - mongo
  
-  psql:
-    image: postgres:11.9
-    ports:
-      - "5432:5432"
+  mongo:
+    image: mongo:latest
     environment:
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_USER=user
-      - POSTGRES_DB=database
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
